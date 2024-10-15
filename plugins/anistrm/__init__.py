@@ -132,6 +132,8 @@ class ANiStrm(_PluginBase):
     @retry(Exception, tries=3, logger=logger, ret=[])
     def get_current_season_list(self) -> List:
         url = f'https://ani.v300.eu.org/{self.__get_ani_season()}/'
+        
+        logger.info(f"ANi-Strm服务启动，立即运行一次{self.__get_ani_season()}")
 
         rep = RequestUtils(ua=settings.USER_AGENT if settings.USER_AGENT else None,
                            proxies=settings.PROXY if settings.PROXY else None).post(url=url)
