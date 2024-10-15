@@ -25,9 +25,9 @@ class DouBanWatching(_PluginBase):
     # 插件版本
     plugin_version = "1.9.4"
     # 插件作者
-    plugin_author = "honue"
+    plugin_author = "just-re"
     # 作者主页
-    author_url = "https://github.com/honue"
+    author_url = "https://github.com/just-re"
     # 插件配置项ID前缀
     plugin_config_prefix = "doubanwatching_"
     # 加载顺序

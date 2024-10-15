@@ -25,13 +25,13 @@ class CDTransfer(_PluginBase):
     # 插件描述
     plugin_desc = "将新入库的媒体文件，使用cd2转移到网盘"
     # 插件图标
-    plugin_icon = "https://raw.githubusercontent.com/honue/MoviePilot-Plugins/main/icons/clouddrive.png"
+    plugin_icon = "https://raw.githubusercontent.com/just-re/MoviePilot-Plugins/main/icons/clouddrive.png"
     # 插件版本
     plugin_version = "0.1.2"
     # 插件作者
-    plugin_author = "honue"
+    plugin_author = "just-re"
     # 作者主页
-    author_url = "https://github.com/honue"
+    author_url = "https://github.com/just-re"
     # 插件配置项ID前缀
     plugin_config_prefix = "cdtransfer_"
     # 加载顺序
@@ -255,7 +255,7 @@ class CDTransfer(_PluginBase):
                                         'props': {
                                             'model': 'username',
                                             'label': 'cd2用户名',
-                                            'placeholder': 'honue@email.com'
+                                            'placeholder': 'just-re@email.com'
                                         }
                                     }
                                 ]

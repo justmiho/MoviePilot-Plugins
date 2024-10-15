@@ -26,13 +26,13 @@ class BangumiRank(_PluginBase):
     # 插件描述
     plugin_desc = "Bangumi成员关注动画榜，时下流行番剧订阅，个人想看订阅"
     # 插件图标
-    plugin_icon = "https://raw.githubusercontent.com/honue/MoviePilot-Plugins/main/icons/miku.jpg"
+    plugin_icon = "https://raw.githubusercontent.com/just-re/MoviePilot-Plugins/main/icons/miku.jpg"
     # 插件版本
     plugin_version = "1.4"
     # 插件作者
-    plugin_author = "honue"
+    plugin_author = "just-re"
     # 作者主页
-    author_url = "https://github.com/honue"
+    author_url = "https://github.com/just-re"
     # 插件配置项ID前缀
     plugin_config_prefix = "bangumirank_"
     # 加载顺序

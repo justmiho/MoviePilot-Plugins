@@ -21,9 +21,9 @@ class FollowNotify(_PluginBase):
     # 插件版本
     plugin_version = "1.1"
     # 插件作者
-    plugin_author = "honue"
+    plugin_author = "just-re"
     # 作者主页
-    author_url = "https://github.com/honue"
+    author_url = "https://github.com/just-re"
     # 插件配置项ID前缀
     plugin_config_prefix = "follownotify_"
     # 加载顺序
@@ -40,7 +40,7 @@ class FollowNotify(_PluginBase):
     def record_favor(self, event: Event):
         """
         记录favor剧集
-        event='item.rate' channel='emby' item_type='TV' item_name='幽游白书' item_id=None item_path='/media/series/日韩剧/幽游白书 (2023)' season_id=None episode_id=None tmdb_id='121659' overview='该剧改编自富坚义博的同名漫画。讲述叛逆少年浦饭幽助（北村匠海 饰）为了救小孩不幸车祸身亡，没想到因此获得重生机会并成为灵界侦探，展开一段不可思议的人生。' percentage=None ip=None device_name=None client=None user_name='honue' image_url=None item_favorite=None save_reason=None item_isvirtual=None media_type='Series'
+        event='item.rate' channel='emby' item_type='TV' item_name='幽游白书' item_id=None item_path='/media/series/日韩剧/幽游白书 (2023)' season_id=None episode_id=None tmdb_id='121659' overview='该剧改编自富坚义博的同名漫画。讲述叛逆少年浦饭幽助（北村匠海 饰）为了救小孩不幸车祸身亡，没想到因此获得重生机会并成为灵界侦探，展开一段不可思议的人生。' percentage=None ip=None device_name=None client=None user_name='just-re' image_url=None item_favorite=None save_reason=None item_isvirtual=None media_type='Series'
         """
         event_info: WebhookEventInfo = event.event_data
         # 只处理剧集喜爱

@@ -1,7 +1,7 @@
 ### MoviePilot-Plugins 本仓库地址
 
 ```
-https://github.com/honue/MoviePilot-Plugins/
+https://github.com/just-re/MoviePilot-Plugins/
 ```
 
 - [ANi-Strm插件](./docs/anistrm.md)
@@ -46,4 +46,4 @@ https://github.com/honue/MoviePilot-Plugins/
 
 ### 如果对你有所帮助⭐
 
-[![Stargazers over time](https://starchart.cc/honue/MoviePilot-Plugins.svg?background=%23FFFFFF&axis=%23333333&line=%2363beff)](https://starchart.cc/honue/MoviePilot-Plugins)
+[![Stargazers over time](https://starchart.cc/just-re/MoviePilot-Plugins.svg?background=%23FFFFFF&axis=%23333333&line=%2363beff)](https://starchart.cc/just-re/MoviePilot-Plugins)

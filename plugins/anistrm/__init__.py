@@ -60,7 +60,7 @@ class ANiStrm(_PluginBase):
     # 插件版本
     plugin_version = "2.4.1"
     # 插件作者
-    plugin_author = "honue"
+    plugin_author = "just-re"
     # 作者主页
     author_url = "https://github.com/just-re"
     # 插件配置项ID前缀

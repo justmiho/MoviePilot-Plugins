@@ -18,11 +18,11 @@ class BangumiSync(_PluginBase):
     # 插件描述
     plugin_desc = "将在看记录同步到bangumi"
     # 插件图标
-    plugin_icon = "https://raw.githubusercontent.com/honue/MoviePilot-Plugins/main/icons/bangumi.jpg"
+    plugin_icon = "https://raw.githubusercontent.com/just-re/MoviePilot-Plugins/main/icons/bangumi.jpg"
     # 插件版本
     plugin_version = "1.8.1"
     # 插件作者
-    plugin_author = "honue,happyTonakai"
+    plugin_author = "just-re,happyTonakai"
     # 作者主页
     author_url = "https://github.com/happyTonakai"
     # 插件配置项ID前缀
@@ -32,7 +32,7 @@ class BangumiSync(_PluginBase):
     # 可使用的用户级别
     auth_level = 2
 
-    UA = "honue/MoviePilot-Plugins (https://github.com/honue/MoviePilot-Plugins)"
+    UA = "just-re/MoviePilot-Plugins (https://github.com/just-re/MoviePilot-Plugins)"
 
     _enable = True
     _user = None
@@ -74,7 +74,7 @@ class BangumiSync(_PluginBase):
                 event_info.event in play_start and \
                 event_info.user_name in self._user.split(','):
             """
-                event='playback.pause' channel='emby' item_type='TV' item_name='咒术回战 S1E47 关门' item_id='22646' item_path='/media/cartoon/动漫/咒术回战 (2020)/Season 1/咒术回战 - S01E47 - 第 47 集.mkv' season_id=1 episode_id=47 tmdb_id=None overview='渋谷事変の最終局面に呪術師が集うなかで、脹相は夏油の亡骸に寄生する“黒幕”の正体に気付く。そして、絶体絶命の危機に現れた特級術師・九十九由基。九十九と“黒幕”がそれぞれ語る人類の未来（ネクストステージ...' percentage=2.5705228512861966 ip='127.0.0.1' device_name='Chrome Windows' client='Emby Web' user_name='honue' image_url=None item_favorite=None save_reason=None item_isvirtual=None media_type='Episode'
+                event='playback.pause' channel='emby' item_type='TV' item_name='咒术回战 S1E47 关门' item_id='22646' item_path='/media/cartoon/动漫/咒术回战 (2020)/Season 1/咒术回战 - S01E47 - 第 47 集.mkv' season_id=1 episode_id=47 tmdb_id=None overview='渋谷事変の最終局面に呪術師が集うなかで、脹相は夏油の亡骸に寄生する“黒幕”の正体に気付く。そして、絶体絶命の危機に現れた特級術師・九十九由基。九十九と“黒幕”がそれぞれ語る人類の未来（ネクストステージ...' percentage=2.5705228512861966 ip='127.0.0.1' device_name='Chrome Windows' client='Emby Web' user_name='just-re' image_url=None item_favorite=None save_reason=None item_isvirtual=None media_type='Episode'
             """
             # 标题，mp 的 tmdb 搜索 api 有点问题，带空格的搜不出来，直接使用 emby 事件的标题
             tmdb_id = event_info.tmdb_id
