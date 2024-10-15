@@ -56,13 +56,13 @@ class ANiStrm(_PluginBase):
     # 插件描述
     plugin_desc = "自动获取当季所有番剧，免去下载，轻松拥有一个番剧媒体库"
     # 插件图标
-    plugin_icon = "https://raw.githubusercontent.com/honue/MoviePilot-Plugins/main/icons/anistrm.png"
+    plugin_icon = "https://raw.githubusercontent.com/just-re/MoviePilot-Plugins/main/icons/anistrm.png"
     # 插件版本
     plugin_version = "2.4.1"
     # 插件作者
     plugin_author = "honue"
     # 作者主页
-    author_url = "https://github.com/honue"
+    author_url = "https://github.com/just-re"
     # 插件配置项ID前缀
     plugin_config_prefix = "anistrm_"
     # 加载顺序
@@ -131,7 +131,7 @@ class ANiStrm(_PluginBase):
 
     @retry(Exception, tries=3, logger=logger, ret=[])
     def get_current_season_list(self) -> List:
-        url = f'https://openani.an-i.workers.dev/{self.__get_ani_season()}/'
+        url = f'https://ani.v300.eu.org/{self.__get_ani_season()}/'
 
         rep = RequestUtils(ua=settings.USER_AGENT if settings.USER_AGENT else None,
                            proxies=settings.PROXY if settings.PROXY else None).post(url=url)
@@ -141,7 +141,7 @@ class ANiStrm(_PluginBase):
 
     @retry(Exception, tries=3, logger=logger, ret=[])
     def get_latest_list(self) -> List:
-        addr = 'https://api.ani.rip/ani-download.xml'
+        addr = 'https://aniapi.v300.eu.org/ani-download.xml'
         ret = RequestUtils(ua=settings.USER_AGENT if settings.USER_AGENT else None,
                            proxies=settings.PROXY if settings.PROXY else None).get_res(addr)
         ret_xml = ret.text
@@ -157,13 +157,13 @@ class ANiStrm(_PluginBase):
             # 链接
             link = DomUtils.tag_value(item, "link", default="")
             rss_info['title'] = title
-            rss_info['link'] = link.replace("resources.ani.rip", "openani.an-i.workers.dev")
+            rss_info['link'] = link
             ret_array.append(rss_info)
         return ret_array
 
     def __touch_strm_file(self, file_name, file_url: str = None) -> bool:
         if not file_url:
-            src_url = f'https://openani.an-i.workers.dev/{self._date}/{file_name}?d=true'
+            src_url = f'https://ani.v300.eu.org/{self._date}/{file_name}?d=true'
         else:
             src_url = file_url
         file_path = f'{self._storageplace}/{file_name}.strm'
@@ -333,7 +333,7 @@ class ANiStrm(_PluginBase):
                                             'type': 'info',
                                             'variant': 'tonal',
                                             'text': 'emby容器需要设置代理，docker的环境变量必须要有http_proxy代理变量，大小写敏感，具体见readme.' + '\n' +
-                                                    'https://github.com/honue/MoviePilot-Plugins',
+                                                    'https://github.com/just-re/MoviePilot-Plugins',
                                             'style': 'white-space: pre-line;'
                                         }
                                     }
