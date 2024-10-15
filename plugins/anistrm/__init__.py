@@ -50,15 +50,15 @@ def retry(ExceptionToCheck: Any,
     return deco_retry
 
 
-class justANiStrm(_PluginBase):
+class JustANiStrm(_PluginBase):
     # 插件名称
-    plugin_name = "justANiStrm"
+    plugin_name = "JustANiStrm"
     # 插件描述
     plugin_desc = "自动获取当季所有番剧，免去下载，轻松拥有一个番剧媒体库"
     # 插件图标
     plugin_icon = "https://raw.githubusercontent.com/just-re/MoviePilot-Plugins/main/icons/anistrm.png"
     # 插件版本
-    plugin_version = "1.0.0"
+    plugin_version = "1.0.1"
     # 插件作者
     plugin_author = "just-re"
     # 作者主页
@@ -380,6 +380,6 @@ class justANiStrm(_PluginBase):
 
 
 if __name__ == "__main__":
-    anistrm = justANiStrm()
+    anistrm = JustANiStrm()
     name_list = anistrm.get_latest_list()
     print(name_list)
