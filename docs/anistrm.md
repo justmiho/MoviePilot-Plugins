@@ -37,28 +37,7 @@
 > /bin/ffprobe -i "https://resources.ani.rip/2023-10/[ANi] 葬送的芙莉蓮 - 02 [1080P][Baha][WEB-DL][AAC AVC][CHT]
 > .mp4?d=true" -threads 0 -v info -print_format json -show_streams -show_chapters -show_format -show_data
 
-**emby容器代理设置**
-
-❗ ❗ ❗ **环境变量必须多设置一条，键为小写的http_proxy的代理**
-
-[ffprobe源码](https://github.com/FFmpeg/FFmpeg/blob/master/libavformat/http.c#L218C48-L218C48) 使用getenv_utf8("
-http_proxy") 对大小写敏感。
-
-emby docker-compose env
-
-```yaml
-- 'http_proxy=http://127.0.0.1:7890'
-- 'HTTP_PROXY=http://127.0.0.1:7890'
-- 'HTTPS_PROXY=http://127.0.0.1:7890'
-```
-另外clash 这两个域名记得设置代理规则
-```
-resources.ani.rip
-aniopen.an-i.workers.dev
-```
-
-## Todo:
-
 - [x] ~~网页、fileball 无法播放的问题，看看能不能解决，或者有无更好的源代替~~。
 - [x] 更新获取最新方法，避免跨季度番剧漏抓
 - [x] 排查是否存在bug，优化使用
+- [x] 添加历史季度的源

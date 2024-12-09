@@ -58,7 +58,7 @@ class JustANiStrm(_PluginBase):
     # 插件图标
     plugin_icon = "https://raw.githubusercontent.com/just-re/MoviePilot-Plugins/main/icons/anistrm.png"
     # 插件版本
-    plugin_version = "1.0.1"
+    plugin_version = "1.0.2"
     # 插件作者
     plugin_author = "just-re"
     # 作者主页
@@ -323,19 +323,9 @@ class JustANiStrm(_PluginBase):
                                         'props': {
                                             'type': 'info',
                                             'variant': 'tonal',
-                                            'text': '自动从open ANi抓取下载直链生成strm文件，免去人工订阅下载' + '\n' +
+                                            'text': '自动从open ANi镜像站抓取下载直链生成strm文件，免去人工订阅下载' + '\n' +
                                                     '配合目录监控使用，strm文件创建在/downloads/strm' + '\n' +
                                                     '通过目录监控转移到link媒体库文件夹 如/downloads/link/strm  mp会完成刮削',
-                                            'style': 'white-space: pre-line;'
-                                        }
-                                    },
-                                    {
-                                        'component': 'VAlert',
-                                        'props': {
-                                            'type': 'info',
-                                            'variant': 'tonal',
-                                            'text': 'emby容器需要设置代理，docker的环境变量必须要有http_proxy代理变量，大小写敏感，具体见readme.' + '\n' +
-                                                    'https://github.com/just-re/MoviePilot-Plugins',
                                             'style': 'white-space: pre-line;'
                                         }
                                     }
