@@ -58,7 +58,7 @@ class JustANiStrm(_PluginBase):
     # 插件图标
     plugin_icon = "https://raw.githubusercontent.com/just-re/MoviePilot-Plugins/main/icons/anistrm.png"
     # 插件版本
-    plugin_version = "1.0.2"
+    plugin_version = "1.0.3"
     # 插件作者
     plugin_author = "just-re"
     # 作者主页
@@ -77,6 +77,7 @@ class JustANiStrm(_PluginBase):
     _onlyonce = False
     _fulladd = False
     _storageplace = None
+    _anisite = None
 
     # 定时器
     _scheduler: Optional[BackgroundScheduler] = None
@@ -91,6 +92,7 @@ class JustANiStrm(_PluginBase):
             self._onlyonce = config.get("onlyonce")
             self._fulladd = config.get("fulladd")
             self._storageplace = config.get("storageplace")
+            self._anisite = config.get("anisite")
             # 加载模块
         if self._enabled or self._onlyonce:
             # 定时服务
@@ -131,7 +133,7 @@ class JustANiStrm(_PluginBase):
 
     @retry(Exception, tries=3, logger=logger, ret=[])
     def get_current_season_list(self) -> List:
-        url = f'https://ani.v300.eu.org/{self.__get_ani_season()}/'
+        url = f'{self._anisite}{self.__get_ani_season()}/'
         
         logger.info(f"ANi-Strm服务启动，立即运行一次{self.__get_ani_season()}")
 
@@ -143,7 +145,7 @@ class JustANiStrm(_PluginBase):
 
     @retry(Exception, tries=3, logger=logger, ret=[])
     def get_latest_list(self) -> List:
-        addr = 'https://aniapi.v300.eu.org/ani-download.xml'
+        addr = f'{self._anisite}ani-download.xml'
         ret = RequestUtils(ua=settings.USER_AGENT if settings.USER_AGENT else None,
                            proxies=settings.PROXY if settings.PROXY else None).get_res(addr)
         ret_xml = ret.text
@@ -165,7 +167,7 @@ class JustANiStrm(_PluginBase):
 
     def __touch_strm_file(self, file_name, file_url: str = None) -> bool:
         if not file_url:
-            src_url = f'https://ani.v300.eu.org/{self._date}/{file_name}?d=true'
+            src_url = f'{self._anisite}{self._date}/{file_name}?d=true'
         else:
             src_url = file_url
         file_path = f'{self._storageplace}/{file_name}.strm'
@@ -303,6 +305,23 @@ class JustANiStrm(_PluginBase):
                                             'model': 'storageplace',
                                             'label': 'Strm存储地址',
                                             'placeholder': '/downloads/strm'
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                'component': 'VCol',
+                                'props': {
+                                    'cols': 12,
+                                    'md': 4
+                                },
+                                'content': [
+                                    {
+                                        'component': 'VTextField',
+                                        'props': {
+                                            'model': 'anisite',
+                                            'label': 'ani站点',
+                                            'placeholder': 'https://ani.v300.eu.org/'
                                         }
                                     }
                                 ]
