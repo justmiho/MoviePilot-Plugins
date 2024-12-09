@@ -58,7 +58,7 @@ class JustANiStrm(_PluginBase):
     # 插件图标
     plugin_icon = "https://raw.githubusercontent.com/just-re/MoviePilot-Plugins/main/icons/anistrm.png"
     # 插件版本
-    plugin_version = "1.0.4"
+    plugin_version = "1.0.5"
     # 插件作者
     plugin_author = "just-re"
     # 作者主页
@@ -360,6 +360,7 @@ class JustANiStrm(_PluginBase):
             "fulladd": False,
             "storageplace": '/downloads/strm',
             "cron": "*/20 22,23,0,1 * * *",
+            "anisite":'https://ani.v300.eu.org/',
         }
 
     def __update_config(self):
@@ -369,6 +370,7 @@ class JustANiStrm(_PluginBase):
             "enabled": self._enabled,
             "fulladd": self._fulladd,
             "storageplace": self._storageplace,
+            "anisite":self._anisite,
         })
 
     def get_page(self) -> List[dict]:
