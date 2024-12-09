@@ -58,7 +58,7 @@ class JustANiStrm(_PluginBase):
     # 插件图标
     plugin_icon = "https://raw.githubusercontent.com/just-re/MoviePilot-Plugins/main/icons/anistrm.png"
     # 插件版本
-    plugin_version = "1.0.4"
+    plugin_version = "1.0.5"
     # 插件作者
     plugin_author = "just-re"
     # 作者主页
@@ -68,7 +68,7 @@ class JustANiStrm(_PluginBase):
     # 加载顺序
     plugin_order = 15
     # 可使用的用户级别
-    auth_level = 1
+    auth_level = 2
 
     # 私有属性
     _enabled = False
