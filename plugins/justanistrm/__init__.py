@@ -152,7 +152,7 @@ class JustANiStrm(_PluginBase):
     def get_latest_list(self) -> List:
         addr = f'{self._aniapi}ani-download.xml'
         if logger:
-            logger.debug(addr)
+            logger.info(addr)
         else:
             print(addr)
         ret = RequestUtils(ua=settings.USER_AGENT if settings.USER_AGENT else None,
@@ -181,7 +181,7 @@ class JustANiStrm(_PluginBase):
             src_url = file_url
             
         if logger:
-            logger.debug(src_url)
+            logger.info(src_url)
         else:
             print(src_url)
         file_path = f'{self._storageplace}/{file_name}.strm'
