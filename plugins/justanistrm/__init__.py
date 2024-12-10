@@ -79,7 +79,6 @@ class JustANiStrm(_PluginBase):
     _storageplace = None
     _ani = None
     _aniapi = None
-    _date = None
 
     # 定时器
     _scheduler: Optional[BackgroundScheduler] = None
@@ -96,7 +95,6 @@ class JustANiStrm(_PluginBase):
             self._storageplace = config.get("storageplace")
             self._ani = config.get("ani")
             self._aniapi = config.get("aniapi")
-            self._date = config.get("_date")
             # 加载模块
         if self._enabled or self._onlyonce:
             # 定时服务
@@ -131,18 +129,15 @@ class JustANiStrm(_PluginBase):
         current_year = current_date.year
         current_month = idx_month if idx_month else current_date.month
         for month in range(current_month, 0, -1):
-            if month in [10, 7, 4, 1] and self._date is None:
+            if month in [10, 7, 4, 1]:
                 self._date = f'{current_year}-{month}'
-        return self._date
+                return self._date
 
     @retry(Exception, tries=3, logger=logger, ret=[])
     def get_current_season_list(self) -> List:
         url = f'{self._ani}{self.__get_ani_season()}/'
         
         logger.info(f"ANi-Strm服务启动，立即运行一次{self.__get_ani_season()}")
-
-        self._date = None
-        self.__update_config()
 
         rep = RequestUtils(ua=settings.USER_AGENT if settings.USER_AGENT else None,
                            proxies=settings.PROXY if settings.PROXY else None).post(url=url)
@@ -358,23 +353,6 @@ class JustANiStrm(_PluginBase):
                                         }
                                     }
                                 ]
-                            },
-                            {
-                                'component': 'VCol',
-                                'props': {
-                                    'cols': 12,
-                                    'md': 4
-                                },
-                                'content': [
-                                    {
-                                        'component': 'VTextField',
-                                        'props': {
-                                            'model': 'date',
-                                            'label': '番剧季度',
-                                            'placeholder': '格式：20XX-XX'
-                                        }
-                                    }
-                                ]
                             }
                         ]
                     },
@@ -412,7 +390,6 @@ class JustANiStrm(_PluginBase):
             "cron": "*/20 22,23,0,1 * * *",
             "ani":'https://ani.v300.eu.org/',
             "aniapi":"https://aniapi.v300.eu.org/",
-            "date": None,
         }
 
     def __update_config(self):
@@ -424,7 +401,6 @@ class JustANiStrm(_PluginBase):
             "storageplace": self._storageplace,
             "ani": self._ani,
             "aniapi":self._aniapi,
-            "date": self._date,
         })
 
     def get_page(self) -> List[dict]:
