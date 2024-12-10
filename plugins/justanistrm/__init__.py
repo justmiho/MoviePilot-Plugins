@@ -58,7 +58,7 @@ class JustANiStrm(_PluginBase):
     # 插件图标
     plugin_icon = "https://raw.githubusercontent.com/just-re/MoviePilot-Plugins/main/icons/anistrm.png"
     # 插件版本
-    plugin_version = "1.0.5"
+    plugin_version = "1.0.6"
     # 插件作者
     plugin_author = "just-re"
     # 作者主页
@@ -78,6 +78,7 @@ class JustANiStrm(_PluginBase):
     _fulladd = False
     _storageplace = None
     _anisite = None
+    _date = None
 
     # 定时器
     _scheduler: Optional[BackgroundScheduler] = None
@@ -93,6 +94,7 @@ class JustANiStrm(_PluginBase):
             self._fulladd = config.get("fulladd")
             self._storageplace = config.get("storageplace")
             self._anisite = config.get("anisite")
+            self._date = config.get("_date")
             # 加载模块
         if self._enabled or self._onlyonce:
             # 定时服务
@@ -115,6 +117,7 @@ class JustANiStrm(_PluginBase):
                 # 关闭一次性开关 全量转移
                 self._onlyonce = False
                 self._fulladd = False
+                self._date = None
             self.__update_config()
 
             # 启动任务
@@ -127,9 +130,9 @@ class JustANiStrm(_PluginBase):
         current_year = current_date.year
         current_month = idx_month if idx_month else current_date.month
         for month in range(current_month, 0, -1):
-            if month in [10, 7, 4, 1]:
+            if month in [10, 7, 4, 1] and self._date is None:
                 self._date = f'{current_year}-{month}'
-                return f'{current_year}-{month}'
+        return self._date
 
     @retry(Exception, tries=3, logger=logger, ret=[])
     def get_current_season_list(self) -> List:
@@ -146,6 +149,10 @@ class JustANiStrm(_PluginBase):
     @retry(Exception, tries=3, logger=logger, ret=[])
     def get_latest_list(self) -> List:
         addr = f'{self._anisite}ani-download.xml'
+        if logger:
+            logger.warn(addr)
+        else:
+            print(addr)
         ret = RequestUtils(ua=settings.USER_AGENT if settings.USER_AGENT else None,
                            proxies=settings.PROXY if settings.PROXY else None).get_res(addr)
         ret_xml = ret.text
@@ -170,6 +177,11 @@ class JustANiStrm(_PluginBase):
             src_url = f'{self._anisite}{self._date}/{file_name}?d=true'
         else:
             src_url = file_url
+            
+        if logger:
+            logger.warn(src_url)
+        else:
+            print(src_url)
         file_path = f'{self._storageplace}/{file_name}.strm'
         if os.path.exists(file_path):
             logger.debug(f'{file_name}.strm 文件已存在')
@@ -325,6 +337,23 @@ class JustANiStrm(_PluginBase):
                                         }
                                     }
                                 ]
+                            },
+                            {
+                                'component': 'VCol',
+                                'props': {
+                                    'cols': 12,
+                                    'md': 4
+                                },
+                                'content': [
+                                    {
+                                        'component': 'VTextField',
+                                        'props': {
+                                            'model': 'date',
+                                            'label': '番剧季度',
+                                            'placeholder': '格式：20XX-xx'
+                                        }
+                                    }
+                                ]
                             }
                         ]
                     },
@@ -361,6 +390,7 @@ class JustANiStrm(_PluginBase):
             "storageplace": '/downloads/strm',
             "cron": "*/20 22,23,0,1 * * *",
             "anisite":'https://ani.v300.eu.org/',
+            "date": None,
         }
 
     def __update_config(self):
@@ -370,7 +400,8 @@ class JustANiStrm(_PluginBase):
             "enabled": self._enabled,
             "fulladd": self._fulladd,
             "storageplace": self._storageplace,
-            "anisite":self._anisite,
+            "anisite": self._anisite,
+            "date": self._date,
         })
 
     def get_page(self) -> List[dict]:
