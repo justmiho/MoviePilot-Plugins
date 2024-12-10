@@ -94,8 +94,8 @@ class JustANiStrm(_PluginBase):
             self._onlyonce = config.get("onlyonce")
             self._fulladd = config.get("fulladd")
             self._storageplace = config.get("storageplace")
-            self._ani = config.get("ani","https://ani.v300.eu.org/")
-            self._aniapi = config.get("aniapi","https://aniapi.v300.eu.org/")
+            self._ani = config.get("ani")
+            self._aniapi = config.get("aniapi")
             self._date = config.get("_date")
             # 加载模块
         if self._enabled or self._onlyonce:
@@ -119,7 +119,6 @@ class JustANiStrm(_PluginBase):
                 # 关闭一次性开关 全量转移
                 self._onlyonce = False
                 self._fulladd = False
-                self._date = None
             self.__update_config()
 
             # 启动任务
@@ -141,6 +140,9 @@ class JustANiStrm(_PluginBase):
         url = f'{self._ani}{self.__get_ani_season()}/'
         
         logger.info(f"ANi-Strm服务启动，立即运行一次{self.__get_ani_season()}")
+
+        self._date = None
+        self.__update_config()
 
         rep = RequestUtils(ua=settings.USER_AGENT if settings.USER_AGENT else None,
                            proxies=settings.PROXY if settings.PROXY else None).post(url=url)
