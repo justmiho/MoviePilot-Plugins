@@ -58,7 +58,7 @@ class JustANiStrm(_PluginBase):
     # 插件图标
     plugin_icon = "https://raw.githubusercontent.com/just-re/MoviePilot-Plugins/main/icons/anistrm.png"
     # 插件版本
-    plugin_version = "1.0.6"
+    plugin_version = "1.0.7"
     # 插件作者
     plugin_author = "just-re"
     # 作者主页
@@ -77,7 +77,8 @@ class JustANiStrm(_PluginBase):
     _onlyonce = False
     _fulladd = False
     _storageplace = None
-    _anisite = None
+    _ani = None
+    _aniapi = None
     _date = None
 
     # 定时器
@@ -93,7 +94,8 @@ class JustANiStrm(_PluginBase):
             self._onlyonce = config.get("onlyonce")
             self._fulladd = config.get("fulladd")
             self._storageplace = config.get("storageplace")
-            self._anisite = config.get("anisite")
+            self._ani = config.get("ani")
+            self._aniapi = config.get("aniapi")
             self._date = config.get("_date")
             # 加载模块
         if self._enabled or self._onlyonce:
@@ -136,7 +138,7 @@ class JustANiStrm(_PluginBase):
 
     @retry(Exception, tries=3, logger=logger, ret=[])
     def get_current_season_list(self) -> List:
-        url = f'{self._anisite}{self.__get_ani_season()}/'
+        url = f'{self._ani}{self.__get_ani_season()}/'
         
         logger.info(f"ANi-Strm服务启动，立即运行一次{self.__get_ani_season()}")
 
@@ -148,9 +150,9 @@ class JustANiStrm(_PluginBase):
 
     @retry(Exception, tries=3, logger=logger, ret=[])
     def get_latest_list(self) -> List:
-        addr = f'{self._anisite}ani-download.xml'
+        addr = f'{self._aniapi}ani-download.xml'
         if logger:
-            logger.warn(addr)
+            logger.debug(addr)
         else:
             print(addr)
         ret = RequestUtils(ua=settings.USER_AGENT if settings.USER_AGENT else None,
@@ -174,12 +176,12 @@ class JustANiStrm(_PluginBase):
 
     def __touch_strm_file(self, file_name, file_url: str = None) -> bool:
         if not file_url:
-            src_url = f'{self._anisite}{self._date}/{file_name}?d=true'
+            src_url = f'{self._ani}{self._date}/{file_name}?d=true'
         else:
             src_url = file_url
             
         if logger:
-            logger.warn(src_url)
+            logger.debug(src_url)
         else:
             print(src_url)
         file_path = f'{self._storageplace}/{file_name}.strm'
@@ -331,9 +333,26 @@ class JustANiStrm(_PluginBase):
                                     {
                                         'component': 'VTextField',
                                         'props': {
-                                            'model': 'anisite',
+                                            'model': 'ani',
                                             'label': 'ani站点',
-                                            'placeholder': 'https://ani.v300.eu.org/'
+                                            'placeholder': 'https://aniopen.an-i.workers.dev/'
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                'component': 'VCol',
+                                'props': {
+                                    'cols': 12,
+                                    'md': 4
+                                },
+                                'content': [
+                                    {
+                                        'component': 'VTextField',
+                                        'props': {
+                                            'model': 'aniapi',
+                                            'label': 'aniRss',
+                                            'placeholder': 'https://api.ani.rip/'
                                         }
                                     }
                                 ]
@@ -350,7 +369,7 @@ class JustANiStrm(_PluginBase):
                                         'props': {
                                             'model': 'date',
                                             'label': '番剧季度',
-                                            'placeholder': '格式：20XX-xx'
+                                            'placeholder': '格式：20XX-XX'
                                         }
                                     }
                                 ]
@@ -389,7 +408,8 @@ class JustANiStrm(_PluginBase):
             "fulladd": False,
             "storageplace": '/downloads/strm',
             "cron": "*/20 22,23,0,1 * * *",
-            "anisite":'https://ani.v300.eu.org/',
+            "ani":'https://ani.v300.eu.org/',
+            "aniapi":"https://aniapi.v300.eu.org/",
             "date": None,
         }
 
@@ -400,7 +420,8 @@ class JustANiStrm(_PluginBase):
             "enabled": self._enabled,
             "fulladd": self._fulladd,
             "storageplace": self._storageplace,
-            "anisite": self._anisite,
+            "ani": self._ani,
+            "aniapi":self._aniapi,
             "date": self._date,
         })
 
