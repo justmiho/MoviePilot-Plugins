@@ -94,8 +94,8 @@ class JustANiStrm(_PluginBase):
             self._onlyonce = config.get("onlyonce")
             self._fulladd = config.get("fulladd")
             self._storageplace = config.get("storageplace")
-            self._ani = config.get("ani")
-            self._aniapi = config.get("aniapi")
+            self._ani = config.get("ani","https://ani.v300.eu.org/")
+            self._aniapi = config.get("aniapi","https://aniapi.v300.eu.org/")
             self._date = config.get("_date")
             # 加载模块
         if self._enabled or self._onlyonce:
