@@ -5,6 +5,7 @@
     "version": "1.0.7",
     "icon": "https://raw.githubusercontent.com/just-re/MoviePilot-Plugins/main/icons/anistrm.png",
     "author": "just-re",
-    "level": 2
+    "level": 2,
+    "v2": true
   }
 }
