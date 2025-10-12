@@ -58,11 +58,11 @@ class JustANiStrm(_PluginBase):
     # 插件图标
     plugin_icon = "https://raw.githubusercontent.com/just-re/MoviePilot-Plugins/main/icons/anistrm.png"
     # 插件版本
-    plugin_version = "1.0.7"
+    plugin_version = "1.0.8"
     # 插件作者
-    plugin_author = "just-re"
+    plugin_author = "justmiho"
     # 作者主页
-    author_url = "https://github.com/just-re"
+    author_url = "https://github.com/justmiho"
     # 插件配置项ID前缀
     plugin_config_prefix = "justanistrm_"
     # 加载顺序
@@ -141,7 +141,7 @@ class JustANiStrm(_PluginBase):
 
         rep = RequestUtils(ua=settings.USER_AGENT if settings.USER_AGENT else None,
                            proxies=settings.PROXY if settings.PROXY else None).post(url=url)
-        logger.debug(rep.text)
+        logger.info(rep.text)
         files_json = rep.json()['files']
         return [file['name'] for file in files_json]
 
