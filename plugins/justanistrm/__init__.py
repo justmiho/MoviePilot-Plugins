@@ -141,7 +141,7 @@ class JustANiStrm(_PluginBase):
 
         rep = RequestUtils(ua=settings.USER_AGENT if settings.USER_AGENT else None,
                            proxies=settings.PROXY if settings.PROXY else None).post(url=url)
-        logger.info(rep.text)
+        logger.debug(rep.text)
         files_json = rep.json()['files']
         return [file['name'] for file in files_json]
 
