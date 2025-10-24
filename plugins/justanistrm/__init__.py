@@ -137,25 +137,13 @@ class JustANiStrm(_PluginBase):
     
     @retry(Exception, tries=3, logger=logger, ret=[])
     def get_current_season_list(self) -> List:
-        url = f'{self._ani}{self.__get_ani_season()}/'
-        
-        logger.info(f"ANi-Strm服务启动，立即运行一次{self.__get_ani_season()}")
-        rep = RequestUtils(
-            ua=settings.USER_AGENT if settings.USER_AGENT else None,
-            proxies=settings.PROXY if settings.PROXY else None
-        ).post(url=url)
-        logger.debug(rep.text)
-        
-        # 尝试从 rep.json() 获取 files_json
-        files_json = rep.json().get('files', [])
-        
-        # 如果 files_json 为空，尝试从 self._anijson 解析
-        if not files_json and self._anijson:
-            try:
-                import json
-                files_json = json.loads(self._anijson).get('files', [])
-            except Exception as e:
-                logger.error(f"解析 self._anijson 失败: {e}")
+        try:
+            import json
+            backup_json = json.loads(self._anijson)
+            files_json = backup_json.get('files', [])
+            logger.info(f"从self._anijson解析的files_json: {files_json}")  # 打印备份数据
+        except Exception as e:
+            logger.error(f"解析self._anijson失败: {e}")
         
         return [file['name'] for file in files_json]
 
