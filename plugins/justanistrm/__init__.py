@@ -58,7 +58,7 @@ class JustANiStrm(_PluginBase):
     # 插件图标
     plugin_icon = "https://raw.githubusercontent.com/just-re/MoviePilot-Plugins/main/icons/anistrm.png"
     # 插件版本
-    plugin_version = "1.1.0"
+    plugin_version = "1.1.1"
     # 插件作者
     plugin_author = "justmiho"
     # 作者主页
@@ -139,6 +139,7 @@ class JustANiStrm(_PluginBase):
     def get_current_season_list(self) -> List:
         try:
             import json
+            self.__get_ani_season()
             backup_json = json.loads(self._anijson)
             files_json = backup_json.get('files', [])
         except Exception as e:
