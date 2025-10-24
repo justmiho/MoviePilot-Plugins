@@ -58,7 +58,7 @@ class JustANiStrm(_PluginBase):
     # 插件图标
     plugin_icon = "https://raw.githubusercontent.com/just-re/MoviePilot-Plugins/main/icons/anistrm.png"
     # 插件版本
-    plugin_version = "1.0.9"
+    plugin_version = "1.1.0"
     # 插件作者
     plugin_author = "justmiho"
     # 作者主页
@@ -141,7 +141,6 @@ class JustANiStrm(_PluginBase):
             import json
             backup_json = json.loads(self._anijson)
             files_json = backup_json.get('files', [])
-            logger.info(f"从self._anijson解析的files_json: {files_json}")  # 打印备份数据
         except Exception as e:
             logger.error(f"解析self._anijson失败: {e}")
         
