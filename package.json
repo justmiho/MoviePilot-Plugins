@@ -2,7 +2,7 @@
   "justANiStrm": {
     "name": "Just ANi Strm",
     "description": "自动获取当季所有番剧，免去下载，轻松拥有一个番剧媒体库",
-    "version": "1.0.8",
+    "version": "1.0.9",
     "icon": "https://raw.githubusercontent.com/justmiho/MoviePilot-Plugins/main/icons/anistrm.png",
     "author": "justmiho",
     "level": 2,

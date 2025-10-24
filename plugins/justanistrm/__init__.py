@@ -58,7 +58,7 @@ class JustANiStrm(_PluginBase):
     # 插件图标
     plugin_icon = "https://raw.githubusercontent.com/just-re/MoviePilot-Plugins/main/icons/anistrm.png"
     # 插件版本
-    plugin_version = "1.0.8"
+    plugin_version = "1.0.9"
     # 插件作者
     plugin_author = "justmiho"
     # 作者主页
@@ -79,6 +79,7 @@ class JustANiStrm(_PluginBase):
     _storageplace = None
     _ani = None
     _aniapi = None
+    _anijson = None
 
     # 定时器
     _scheduler: Optional[BackgroundScheduler] = None
@@ -95,6 +96,7 @@ class JustANiStrm(_PluginBase):
             self._storageplace = config.get("storageplace")
             self._ani = config.get("ani")
             self._aniapi = config.get("aniapi")
+            self._anijson = config.get("anijson")
             # 加载模块
         if self._enabled or self._onlyonce:
             # 定时服务
@@ -132,17 +134,29 @@ class JustANiStrm(_PluginBase):
             if month in [10, 7, 4, 1]:
                 self._date = f'{current_year}-{month}'
                 return self._date
-
+    
     @retry(Exception, tries=3, logger=logger, ret=[])
     def get_current_season_list(self) -> List:
         url = f'{self._ani}{self.__get_ani_season()}/'
         
         logger.info(f"ANi-Strm服务启动，立即运行一次{self.__get_ani_season()}")
-
-        rep = RequestUtils(ua=settings.USER_AGENT if settings.USER_AGENT else None,
-                           proxies=settings.PROXY if settings.PROXY else None).post(url=url)
+        rep = RequestUtils(
+            ua=settings.USER_AGENT if settings.USER_AGENT else None,
+            proxies=settings.PROXY if settings.PROXY else None
+        ).post(url=url)
         logger.debug(rep.text)
-        files_json = rep.json()['files']
+        
+        # 尝试从 rep.json() 获取 files_json
+        files_json = rep.json().get('files', [])
+        
+        # 如果 files_json 为空，尝试从 self._anijson 解析
+        if not files_json and self._anijson:
+            try:
+                import json
+                files_json = json.loads(self._anijson).get('files', [])
+            except Exception as e:
+                logger.error(f"解析 self._anijson 失败: {e}")
+        
         return [file['name'] for file in files_json]
 
     @retry(Exception, tries=3, logger=logger, ret=[])
@@ -363,6 +377,28 @@ class JustANiStrm(_PluginBase):
                                 'component': 'VCol',
                                 'props': {
                                     'cols': 12,
+                                    'md': 4
+                                },
+                                'content': [
+                                    {
+                                        'component': 'VTextField',
+                                        'props': {
+                                            'model': 'anijson',
+                                            'label': '番剧Json地址',
+                                            'placeholder': ''
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        'component': 'VRow',
+                        'content': [
+                            {
+                                'component': 'VCol',
+                                'props': {
+                                    'cols': 12,
                                 },
                                 'content': [
                                     {
@@ -390,6 +426,7 @@ class JustANiStrm(_PluginBase):
             "cron": "*/20 22,23,0,1 * * *",
             "ani":'https://ani.v300.eu.org/',
             "aniapi":"https://aniapi.v300.eu.org/",
+            "anijson":"",
         }
 
     def __update_config(self):
@@ -401,6 +438,7 @@ class JustANiStrm(_PluginBase):
             "storageplace": self._storageplace,
             "ani": self._ani,
             "aniapi":self._aniapi,
+            "anijson":self._anijson,
         })
 
     def get_page(self) -> List[dict]:
